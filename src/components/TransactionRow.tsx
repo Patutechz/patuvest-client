@@ -3,11 +3,11 @@ import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import TrendingUpIcon from "@mui/icons-material/TrendingUp";
 import type { WalletTransactionDto } from "../types";
-// import { formatDistanceToNow } from 'date-fns'
-import dayjs from "dayjs";
-import relativeTime from "dayjs/plugin/relativeTime";
+import { formatDistanceToNow } from 'date-fns'
+// import dayjs from "dayjs";
+// import relativeTime from "dayjs/plugin/relativeTime";
 
-dayjs.extend(relativeTime);
+// dayjs.extend(relativeTime);
 
 interface Props {
   tx: WalletTransactionDto;
@@ -74,8 +74,8 @@ const TransactionRow = ({ tx }: Props) => {
             {tx.description}
           </Typography>
           <Typography variant="caption" color="text.secondary">
-            {/* {formatDistanceToNow(new Date(tx.createdAt), { addSuffix: true })} */}
-            {dayjs(tx.createdAt).fromNow(true)}
+            {formatDistanceToNow(new Date(tx.createdAt), { addSuffix: true })}
+            {/* {dayjs(tx.createdAt).fromNow(true)} */}
           </Typography>
         </Box>
       </Box>
