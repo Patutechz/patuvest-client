@@ -123,7 +123,7 @@ const DashboardLayout = ({ children }: LayoutProps) => {
 
       <Drawer open={open} onClose={toggleDrawer(false)}>
         <Box
-          sx={{ width: 250 }}
+          sx={{ width: 250, bgcolor: "background.default" }}
           role="presentation"
           onClick={toggleDrawer(false)}
         >
