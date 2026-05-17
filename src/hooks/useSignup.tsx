@@ -11,11 +11,15 @@ export const useSignup = () => {
     setIsLoading(true);
     setError(null);
 
-    const response = await fetch("https://patuvest.azurewebsites.net/api/user/register", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-    });
+    const response = await fetch(
+      // "http://localhost:5145/api/user/register",
+      "https://patuvest.azurewebsites.net/api/user/register",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      },
+    );
 
     const json = await response.json();
 
@@ -39,7 +43,6 @@ export const useSignup = () => {
 
   return { signup, isLoading, error };
 };
-
 
 //const text = await response.text()
 //const json = text ? JSON.parse(text) : null

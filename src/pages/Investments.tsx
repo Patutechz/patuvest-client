@@ -45,7 +45,10 @@ const Investments = () => {
   // Load plans (public endpoint)
   useEffect(() => {
     const fetchPlans = async () => {
-      const res = await fetch("https://patuvest.azurewebsites.net/api/investment/plans");
+      const res = await fetch(
+        // "http://localhost:5145/api/investment/plans",
+        "https://patuvest.azurewebsites.net/api/investment/plans",
+      );
       const json = await res.json();
       setPlansLoading(false);
       if (res.ok) setPlans(json);
@@ -59,6 +62,7 @@ const Investments = () => {
     const fetchMine = async () => {
       if (!user) return;
       const res = await fetch(
+        // "http://localhost:5145/api/investment/my-investments",
         "https://patuvest.azurewebsites.net/api/investment/my-investments",
         {
           headers: { Authorization: `Bearer ${user.token}` },
@@ -75,17 +79,21 @@ const Investments = () => {
     if (!user || !selectedPlan) return;
     setInvesting(true);
     setInvestError(null);
-    const res = await fetch("https://patuvest.azurewebsites.net/api/investment", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${user.token}`,
+    const res = await fetch(
+      // "http://localhost:5145/api/investment",
+      "https://patuvest.azurewebsites.net/api/investment",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${user.token}`,
+        },
+        body: JSON.stringify({
+          planId: selectedPlan.id,
+          amount: parseFloat(amount),
+        }),
       },
-      body: JSON.stringify({
-        planId: selectedPlan.id,
-        amount: parseFloat(amount),
-      }),
-    });
+    );
     const json = await res.json();
     setInvesting(false);
     if (!res.ok) {
@@ -103,9 +111,13 @@ const Investments = () => {
         JSON.stringify({ ...stored, walletBalance: newBalance }),
       );
       // Re-fetch wallet to get updated transactions
-      const walletRes = await fetch("https://patuvest.azurewebsites.net/api/wallet", {
-        headers: { Authorization: `Bearer ${user.token}` },
-      });
+      const walletRes = await fetch(
+        // "http://localhost:5145/api/wallet",
+        "https://patuvest.azurewebsites.net/api/wallet",
+        {
+          headers: { Authorization: `Bearer ${user.token}` },
+        },
+      );
       if (walletRes.ok) {
         const walletJson = await walletRes.json();
         walletDispatch({ type: "SET_WALLET", payload: walletJson });

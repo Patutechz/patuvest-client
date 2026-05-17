@@ -62,6 +62,7 @@ const Home = () => {
     if (!user) return;
 
     const fetchWallet = async () => {
+      // const res = await fetch("http://localhost:5145/api/wallet", {
       const res = await fetch("https://patuvest.azurewebsites.net/api/wallet", {
         headers: { Authorization: `Bearer ${user.token}` },
       });
@@ -71,6 +72,7 @@ const Home = () => {
 
     const fetchInvestments = async () => {
       const res = await fetch(
+        // "http://localhost:5145/api/investment/my-investments",
         "https://patuvest.azurewebsites.net/api/investment/my-investments",
         {
           headers: { Authorization: `Bearer ${user.token}` },
@@ -164,7 +166,11 @@ const Home = () => {
         <Grid size={{ xs: 12, md: 5 }}>
           <Paper
             elevation={1}
-            sx={{  p: { xs: 1, md: 4 }, border: "0px solid #e8e8e8", borderRadius: 3 }}
+            sx={{
+              p: { xs: 1, md: 4 },
+              border: "0px solid #e8e8e8",
+              borderRadius: 3,
+            }}
           >
             <Box
               sx={{
@@ -208,7 +214,11 @@ const Home = () => {
         <Grid size={{ xs: 12, md: 7 }}>
           <Paper
             elevation={1}
-            sx={{  p: { xs: 1, md: 4 }, border: "0px solid #e8e8e8", borderRadius: 3 }}
+            sx={{
+              p: { xs: 1, md: 4 },
+              border: "0px solid #e8e8e8",
+              borderRadius: 3,
+            }}
           >
             <Box
               sx={{

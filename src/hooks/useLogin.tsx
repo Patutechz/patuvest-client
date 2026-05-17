@@ -11,11 +11,15 @@ export const useLogin = () => {
     setIsLoading(true);
     setError(null);
 
-    const response = await fetch("https://patuvest.azurewebsites.net/api/user/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password }),
-    });
+    const response = await fetch(
+      // "http://localhost:5145/api/user/login",
+      "https://patuvest.azurewebsites.net/api/user/login",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      },
+    );
 
     const json = await response.json();
 
@@ -23,7 +27,7 @@ export const useLogin = () => {
       setIsLoading(false);
       // API returns plain string or object
       setError(
-        typeof json === "string" ? json : (json.message ?? "Login failed"), 
+        typeof json === "string" ? json : (json.message ?? "Login failed"),
       );
       return;
     }
@@ -36,9 +40,6 @@ export const useLogin = () => {
 
   return { login, isLoading, error };
 };
-
-
-
 
 //const text = await response.text()
 //const json = text ? JSON.parse(text) : null

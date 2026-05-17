@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useThemeMode } from "../ThemeContext";
 import { useLogout } from "../hooks/useLogout";
 import ProfilePic from "../assets/img/avatar.png";
@@ -16,6 +16,8 @@ import {
 import {
   AppBar,
   Avatar,
+  BottomNavigation,
+  BottomNavigationAction,
   Box,
   Container,
   Drawer,
@@ -28,6 +30,7 @@ import {
   Menu,
   MenuItem,
   Toolbar,
+  Typography,
   // Typography,
 } from "@mui/material";
 
@@ -39,7 +42,13 @@ const DashboardLayout = ({ children }: LayoutProps) => {
   const { mode, toggleTheme } = useThemeMode();
   const { logout } = useLogout();
   const navigate = useNavigate();
+  const location = useLocation();
   const [open, setOpen] = React.useState(false);
+  // const [value, setValue] = React.useState(0);
+
+  const handleChange = (_event: React.SyntheticEvent, newValue: string) => {
+    navigate(newValue);
+  };
 
   const handleLogout = () => {
     logout();
@@ -74,11 +83,30 @@ const DashboardLayout = ({ children }: LayoutProps) => {
               size="large"
               edge="start"
               color="inherit"
-              sx={{ mr: 2 }}
+              sx={{ mr: 0, display: { xs: "none", md: "flex" } }}
               onClick={toggleDrawer(true)}
             >
               {open ? <MenuOpenOutlined /> : <MenuOutlined />}
             </IconButton>
+            <Typography
+              variant="h6"
+              noWrap
+              component={Link}
+              to="/"
+              sx={{
+                mr: 2,
+                display: { xs: "flex", md: "flex" },
+                fontFamily: "monospace",
+                fontWeight: 700,
+                color: "inherit",
+                textDecoration: "none",
+              }}
+            >
+              Patu
+              <Typography color="primary" variant="inherit">
+                Vest
+              </Typography>
+            </Typography>
             <Box component="div" sx={{ flexGrow: 1 }}></Box>
             <Box sx={{ display: "flex", gap: 1, alignItems: "center" }}>
               <IconButton onClick={toggleTheme} color="inherit">
@@ -117,13 +145,46 @@ const DashboardLayout = ({ children }: LayoutProps) => {
         </AppBar>
       </Box>
 
-      <Container maxWidth="xl" sx={{  py: 4 }}>
+      <Container maxWidth="xl" sx={{ py: 4, pb: 7 }}>
         {children}
       </Container>
 
+      <Box
+        sx={{
+          position: "fixed",
+          bottom: 0,
+          left: 0,
+          right: 0,
+          display: { xs: "block", md: "none" },
+        }}
+      >
+        {/* <p>{value}</p> */}
+        <BottomNavigation
+          value={location.pathname}
+          onChange={handleChange}
+          showLabels
+        >
+          <BottomNavigationAction
+            value="/"
+            label="Dashboard"
+            icon={<DashboardOutlined />}
+          />
+          <BottomNavigationAction
+            value="/wallet"
+            label="Wallet"
+            icon={<WalletOutlined />}
+          />
+          <BottomNavigationAction
+            value="/investments"
+            label="Investment"
+            icon={<MonetizationOnOutlined />}
+          />
+        </BottomNavigation>
+      </Box>
+
       <Drawer open={open} onClose={toggleDrawer(false)}>
         <Box
-          sx={{ width: 250,  }}
+          sx={{ width: 250 }}
           role="presentation"
           onClick={toggleDrawer(false)}
         >
